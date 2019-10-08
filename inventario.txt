@@ -1,0 +1,7 @@
+leche 001 50 1200 alpina	
+leche 002 50 1250 colanta	
+leche 003 50 1250 Lacteos_la_montaña	
+yogurt_montañita 004 50 750 Lacteos_la_montaña	
+queso_paipa_la_montaña 005 50 1500 Lacteos_la_montaña	
+Pan_tajado 006 60 1350 Comapan	
+kumis 007 80 800 alpina	
