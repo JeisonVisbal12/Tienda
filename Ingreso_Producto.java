@@ -1,18 +1,51 @@
 package tienda;
 
+import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 import javax.swing.JOptionPane;
+import java.sql.*;
+import java.sql.Connection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import tienda.Conexion;
+
 
 public class Ingreso_Producto extends javax.swing.JFrame {
-    Tienda t = new Tienda();
+    Conexion c = new Conexion();
+    Connection cin = c.cargar();
+    PreparedStatement ps;
+    
     public Ingreso_Producto() {
         initComponents();
-    }
-
+         //setLocationRelativeTo(null);
+           }
+  void registrar(){
+      String insertar = "insert into dbo.PRODUCTO (NOMBRE,Codigo,Cantidad,Valor,Descripcion,Proveedor)values (?,?,?,?,?,?)";
+      try {
+          ps = cin.prepareCall(insertar);
+          ps.setString(1, Nomb.getText());
+          ps.setString(2, Cod_Pr.getText());
+          ps.setString(3, Cant_Pr.getText());
+          ps.setString(4, Prec_Pr.getText());
+          ps.setString(5, Descrip.getText());
+          ps.setString(6, Prov_Pr.getText());
+          int registro = ps.executeUpdate();
+          
+          if(registro > 0){
+              JOptionPane.showMessageDialog(null, "Producto agregado con exito","Accion exitosa",JOptionPane.INFORMATION_MESSAGE);
+          }else{
+              JOptionPane.showMessageDialog(null, "Producto no agregado con exito","Accion fallida",JOptionPane.INFORMATION_MESSAGE);
+          }
+      }
+      catch (Exception e){
+          
+      }
+  }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        desc_Pr = new javax.swing.JTextField();
+        Nomb = new javax.swing.JTextField();
         Cod_Pr = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         Cant_Pr = new javax.swing.JTextField();
@@ -23,6 +56,8 @@ public class Ingreso_Producto extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        Descrip = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -43,10 +78,16 @@ public class Ingreso_Producto extends javax.swing.JFrame {
 
         jLabel5.setText("Proveedor");
 
+        jLabel6.setText("Descripcion");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 223, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(116, 116, 116))
             .addGroup(layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -56,26 +97,24 @@ public class Ingreso_Producto extends javax.swing.JFrame {
                             .addComponent(jLabel2)
                             .addComponent(jLabel3)
                             .addComponent(jLabel4)))
-                    .addComponent(jLabel5))
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6))
                 .addGap(52, 52, 52)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Prov_Pr, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Prec_Pr, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Cod_Pr, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(desc_Pr, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Cant_Pr, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(139, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(114, 114, 114))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(Prov_Pr, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
+                    .addComponent(Prec_Pr, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
+                    .addComponent(Cod_Pr, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
+                    .addComponent(Nomb, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
+                    .addComponent(Cant_Pr, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
+                    .addComponent(Descrip))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(desc_Pr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Nomb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -91,28 +130,28 @@ public class Ingreso_Producto extends javax.swing.JFrame {
                     .addComponent(jLabel4))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Prov_Pr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addGap(18, 18, 18)
+                    .addComponent(jLabel6)
+                    .addComponent(Descrip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(Prov_Pr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(9, 9, 9)
                 .addComponent(jButton1)
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addGap(19, 19, 19))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+       
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    t.des_prod = desc_Pr.getText();
-    t.cod_prod = Cod_Pr.getText();
-    t.cant_prod = Cant_Pr.getText();
-    t.prec_prod = Prec_Pr.getText();
-    t.prov_prod = Prov_Pr.getText();
-    t.escribir();
-        JOptionPane.showMessageDialog(null, "Producto agregado con exito","Accion exitosa",JOptionPane.INFORMATION_MESSAGE);
-        desc_Pr.setText("");
+        registrar();
+        Nomb.setText("");
         Cod_Pr.setText("");
         Cant_Pr.setText("");
         Prec_Pr.setText("");
+        Descrip.setText("");
         Prov_Pr.setText("");
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -149,19 +188,23 @@ public class Ingreso_Producto extends javax.swing.JFrame {
                 new Ingreso_Producto().setVisible(true);
             }
         });
+        
+                
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Cant_Pr;
     private javax.swing.JTextField Cod_Pr;
+    private javax.swing.JTextField Descrip;
+    private javax.swing.JTextField Nomb;
     private javax.swing.JTextField Prec_Pr;
     private javax.swing.JTextField Prov_Pr;
-    private javax.swing.JTextField desc_Pr;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     // End of variables declaration//GEN-END:variables
 }
